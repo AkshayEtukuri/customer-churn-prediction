@@ -1,76 +1,53 @@
 # Customer Churn Prediction
 
-Machine learning project that predicts customer churn using XGBoost, SHAP explainability, and a live Streamlit dashboard.
+An end-to-end machine learning project that predicts customer churn risk for a telecom company, with SHAP-based explainability and a live interactive dashboard.
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![XGBoost](https://img.shields.io/badge/XGBoost-ML-green)
-![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
-![SHAP](https://img.shields.io/badge/SHAP-Explainability-orange)
+🔗 **Live Demo:** [customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app](https://customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app/)
 
----
+## Overview
 
-## Problem
-
-Businesses lose significant revenue to customer churn. This project builds an end-to-end ML pipeline that predicts which customers are likely to churn, explains *why* using SHAP, and delivers predictions through a live interactive dashboard.
+Telecom companies lose significant revenue to customer churn. This project builds a full pipeline — from raw data to a deployed, explainable prediction app — to identify customers at risk of leaving and explain *why*, so retention teams can act on it.
 
 ## Dataset
 
-IBM Telco Customer Churn dataset — 7,043 customers, 20 features including contract type, tenure, monthly charges, internet service, and payment method. Target: `Churn Value` (0 = stayed, 1 = churned). Class imbalance handled with SMOTE (26.5% churn rate).
+[IBM Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) — 7,043 customers, 21 features (tenure, contract type, monthly charges, internet service, etc.)
 
-## Key Insights from EDA
+## Approach
 
-- Month-to-month contracts have the highest churn rate (~43%)
-- New customers (tenure < 6 months) churn significantly more
-- Higher monthly charges correlate strongly with churn
+1. **EDA** — uncovered key churn drivers: month-to-month contracts churn ~43% vs. long-term contracts; new customers (low tenure) churn more; higher monthly charges correlate with higher churn risk.
+2. **Feature Engineering** — added `ChargesPerTenure`, `IsNewCustomer`, `TotalServices` to capture behavior beyond raw columns.
+3. **Class Imbalance** — handled with SMOTE (applied only to training data, never test data).
+4. **Modeling** — compared Logistic Regression, Random Forest, and XGBoost using ROC-AUC; XGBoost performed best.
+5. **Explainability** — used SHAP (TreeExplainer) to generate global feature importance and per-customer waterfall plots explaining individual predictions.
+6. **Deployment** — built an interactive Streamlit dashboard for real-time churn risk prediction with live SHAP explanations, deployed on Streamlit Community Cloud.
 
-## Feature Engineering
+## Tech Stack
 
-Two new features created that improved model performance:
+`Python` · `Pandas` · `Scikit-learn` · `XGBoost` · `SHAP` · `imbalanced-learn (SMOTE)` · `Streamlit`
 
-- `ChargesPerTenure` — average monthly spend per month of tenure (became the #1 SHAP feature)
-- `IsNewCustomer` — binary flag for customers with tenure ≤ 6 months
+## Repository Structure
+├── app.py                    # Streamlit dashboard
+├── churn_prediction.ipynb    # Full EDA + modeling notebook
+├── xgb_model.pkl             # Trained XGBoost model
+├── scaler.pkl                # Fitted StandardScaler
+├── feature_names.pkl         # Feature column order for inference
+├── requirements.txt          # Dependencies
+└── archive/                  # Raw dataset
 
-## Models Trained
-
-| Model | AUC Score |
-|---|---|
-| Logistic Regression | 0.8513 |
-| Random Forest | 0.8337 |
-| XGBoost | 0.84+ |
-
-Logistic Regression achieved the best AUC. XGBoost used for SHAP explainability.
-
-## SHAP Explainability
-
-Top features driving churn predictions:
-
-1. `ChargesPerTenure` — engineered feature, most predictive
-2. `Dependents` — customers with dependents less likely to churn
-3. `Contract_Two year` — long-term contracts reduce churn significantly
-
-## Project Structure
-customer-churn-prediction/
-├── app.py                        # Streamlit dashboard
-├── churn_prediction.ipynb        # Full ML pipeline notebook
-├── xgb_model.pkl                 # Saved XGBoost model
-├── scaler.pkl                    # Saved StandardScaler
-├── feature_names.pkl             # Saved feature names
-├── archive/
-│   └── Telco_customer_churn.xlsx # Dataset
-└── README.md
-## Running Locally
+## Run Locally
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn xgboost imbalanced-learn shap streamlit openpyxl
-python -m streamlit run app.py
+git clone https://github.com/AkshayEtukuri/customer-churn-prediction.git
+cd customer-churn-prediction
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-## Results
+## Key Results
 
-- Correctly identifies HIGH RISK customers (month-to-month, high charges, low tenure)
-- Correctly identifies LOW RISK customers (long tenure, two-year contract, lower charges)
-- SHAP waterfall plots explain individual predictions
+- Best model: **XGBoost**, ROC-AUC ~0.85+
+- Top churn drivers identified via SHAP: contract type, tenure, total charges
 
 ## Author
 
-Akshay Etukuri — [github.com/AkshayEtukuri](https://github.com/AkshayEtukuri)
+**Akshay Etukuri** — [GitHub](https://github.com/AkshayEtukuri)
