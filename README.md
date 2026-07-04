@@ -3,7 +3,8 @@
 # 📉 Customer Churn Prediction
 ### *Predicting who's about to walk out the door — before they do*
 
-[![Live App](https://img.shields.io/badge/🚀_Live_Demo-Streamlit-FF4B4B?style=for-the-badge)](https://customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app/)
+[![Streamlit](https://img.shields.io/badge/🚀_Live_Demo-Streamlit-FF4B4B?style=for-the-badge)](https://customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app/)
+[![HuggingFace](https://img.shields.io/badge/🤗_Live_Demo-HuggingFace_Spaces-FFD21E?style=for-the-badge)](https://huggingface.co/spaces/EAkshay/customer-churn-prediction)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-Model-77B900?style=for-the-badge)](https://xgboost.readthedocs.io/)
 [![SHAP](https://img.shields.io/badge/Explainability-SHAP-8A2BE2?style=for-the-badge)](https://shap.readthedocs.io/)
@@ -14,23 +15,25 @@
 
 ## 🎯 The Problem
 
-Telecom companies bleed revenue every year to customers who quietly leave. Acquiring a new customer costs 5–25x more than keeping an existing one. The question isn't just *"will this customer churn?"* — it's *"why, and what can we do about it before it happens?"*
+Telecom companies bleed revenue every year to customers who quietly leave. Acquiring a new customer costs 5–25x more than keeping an existing one. The question isn't just "will this customer churn?" — it's "why, and what can we do about it before it happens?"
 
 This project answers both.
 
 ## ⚡ What It Does
 
-A full machine learning pipeline that goes from raw customer data → risk score → **human-readable explanation**, wrapped in a live dashboard anyone (technical or not) can use.
+A full machine learning pipeline that goes from raw customer data to a risk score to a human-readable explanation, wrapped in a live dashboard anyone — technical or not — can use.
 
-> Type in a customer's profile → get a churn risk score → see *exactly* which factors are driving that risk, visually.
+Type in a customer's profile, get a churn risk score, and see exactly which factors are driving that risk, visually.
 
-🔗 **[Try it live →](https://customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app/)**
+🔗 **Try it live:**
+- [Streamlit Cloud →](https://customer-churn-prediction-u7fzk6jkexnmijedfdrcbv.streamlit.app/)
+- [HuggingFace Spaces →](https://huggingface.co/spaces/EAkshay/customer-churn-prediction)
 
 ## 🔍 What the Data Revealed
 
 | Insight | Detail |
 |---|---|
-| 📄 Contract type is king | Month-to-month customers churn at **~43%** vs. long-term contracts |
+| 📄 Contract type is king | Month-to-month customers churn at ~43% vs. long-term contracts |
 | 🐣 New customers are flight risks | Low-tenure customers churn significantly more |
 | 💸 Price sensitivity is real | Higher monthly charges correlate strongly with churn |
 
@@ -38,19 +41,19 @@ A full machine learning pipeline that goes from raw customer data → risk score
 Raw Data → EDA → Feature Engineering → SMOTE (imbalance fix)
 → Model Race (LogReg vs RF vs XGBoost) → SHAP Explainability → Streamlit App
 
-**Feature Engineering highlights:** `ChargesPerTenure`, `IsNewCustomer`, `TotalServices` — custom features designed to capture behavior, not just raw stats.
+**Feature engineering highlights:** `ChargesPerTenure`, `IsNewCustomer`, `TotalServices` — custom features designed to capture behavior, not just raw stats.
 
-**Model Race Results (ROC-AUC):**
+**Model race results (ROC-AUC):**
 
 🥇 XGBoost — best performer (~0.85+)
 🥈 Random Forest
 🥉 Logistic Regression (baseline)
 
-**Explainability:** Every prediction comes with a SHAP waterfall plot — no black-box "trust me," just a clear breakdown of *why* this specific customer is flagged.
+**Explainability:** Every prediction comes with a SHAP waterfall plot — no black-box "trust me," just a clear breakdown of why this specific customer is flagged.
 
 ## 🧰 Tech Stack
 
-`Python` · `Pandas` · `Scikit-learn` · `XGBoost` · `SHAP` · `imbalanced-learn` · `Streamlit`
+`Python` · `Pandas` · `Scikit-learn` · `XGBoost` · `SHAP` · `imbalanced-learn` · `Streamlit` · `Docker`
 
 ## 📁 Repository Structure
 ├── app.py                    # The dashboard (Streamlit)
@@ -69,6 +72,12 @@ cd customer-churn-prediction
 pip install -r requirements.txt
 streamlit run app.py
 ```
+
+## 🌐 Deployment
+
+This project is deployed on **two platforms** to demonstrate deployment versatility:
+- **Streamlit Community Cloud** — direct Streamlit hosting
+- **HuggingFace Spaces** — containerized via Docker, showcasing a production-style deployment setup
 
 ## 👤 Author
 
